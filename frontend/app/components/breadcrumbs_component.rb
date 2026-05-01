@@ -79,24 +79,8 @@ class BreadcrumbsComponent < ViewComponent::Base
   # Users can extend this hash to add breadcrumbs for additional pages.
   def controller_action_map
     {
-      "users" => {
-        "show" => [{ name: t("spree.account"), url: helpers.account_path }],
-        "edit" => [
-          { name: t("spree.account"), url: helpers.account_path },
-          { name: t("spree.actions.edit"), url: helpers.edit_account_path }
-        ]
-      },
       "carts" => {
         "show" => [{ name: t("spree.cart"), url: helpers.cart_path }]
-      },
-      "user_sessions" => {
-        "new" => [{ name: t("spree.login"), url: helpers.login_path }]
-      },
-      "user_registrations" => {
-        "new" => [{ name: t("spree.sign_up"), url: helpers.signup_path }]
-      },
-      "user_passwords" => {
-        "new" => [{ name: t("spree.forgot_password"), url: helpers.recover_password_path }]
       },
       "products" => {
         "index" => [{ name: t("spree.products"), url: helpers.products_path }]
@@ -114,13 +98,6 @@ class BreadcrumbsComponent < ViewComponent::Base
     crumbs << { name: taxon.name, url: helpers.nested_taxons_path(taxon.permalink) }
   end
 
-  # Adds order and order number to breadcrumbs on the order show page.
-  def add_order_crumb(crumbs)
-    return unless order
-
-    crumbs << { name: t("spree.orders"), url: helpers.account_path }
-    crumbs << { name: order.number, url: helpers.order_path(order) }
-  end
 
   # Adds a "Products" breadcrumb if it doesn’t already exist in the array.
   def add_product_crumb(crumbs)
