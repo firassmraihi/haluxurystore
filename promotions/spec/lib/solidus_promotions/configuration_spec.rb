@@ -1,0 +1,120 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe SolidusPromotions::Configuration do
+  subject(:config) { described_class.new }
+
+  it "has a nice accessor" do
+    expect(subject).to be_a(described_class)
+  end
+
+  it "is an instance of Spree::Configuration" do
+    expect(subject).to be_a(Spree::Preferences::Configuration)
+  end
+
+  describe ".promotion_chooser_class" do
+    it "is the promotion chooser" do
+      expect(subject.discount_chooser_class).to eq(SolidusPromotions::OrderAdjuster::ChooseDiscounts)
+    end
+  end
+
+  describe ".eligibility_checker_class" do
+    it "is the standard eligibility checker" do
+      expect(subject.eligibility_checker_class).to eq(SolidusPromotions::PromotionEligibilityChecker)
+    end
+  end
+
+  describe ".advertiser_class" do
+    it "is the standard advertiser" do
+      expect(subject.advertiser_class).to eq(SolidusPromotions::PromotionAdvertiser)
+    end
+  end
+
+  describe ".promotion_calculators" do
+    subject { config.promotion_calculators }
+
+    it { is_expected.to be_a(Spree::Core::NestedClassSet) }
+  end
+
+  describe ".order_conditions", :silence_deprecations do
+    subject { config.order_conditions }
+
+    it { is_expected.to include(SolidusPromotions::Conditions::User) }
+  end
+
+  describe ".line_item_conditions", :silence_deprecations do
+    subject { config.line_item_conditions }
+
+    it { is_expected.to include(SolidusPromotions::Conditions::LineItemProduct) }
+  end
+
+  describe ".shipment_conditions", :silence_deprecations do
+    subject { config.shipment_conditions }
+
+    it { is_expected.to include(SolidusPromotions::Conditions::ShippingMethod) }
+  end
+
+  describe "deprecated condition setters", :silence_deprecations do
+    before do
+      stub_const("TestCondition", Class.new(SolidusPromotions::Condition))
+    end
+
+    describe "order_conditions=" do
+      it "adds conditions to the #conditions set" do
+        expect { config.order_conditions = [TestCondition] }.to change { config.conditions.count }.by(1)
+        expect(config.conditions).to include(TestCondition)
+      end
+    end
+
+    describe "line_item_conditions=" do
+      it "adds conditions to the #conditions set" do
+        expect { config.line_item_conditions = [TestCondition] }.to change { config.conditions.count }.by(1)
+        expect(config.conditions).to include(TestCondition)
+      end
+    end
+
+    describe "shipment_conditions=" do
+      it "adds conditions to the #conditions set" do
+        expect { config.shipment_conditions = [TestCondition] }.to change { config.conditions.count }.by(1)
+        expect(config.conditions).to include(TestCondition)
+      end
+    end
+  end
+
+  describe ".conditions" do
+    subject { config.conditions }
+
+    it { is_expected.to be_a(Spree::Core::ClassConstantizer::Set) }
+  end
+
+  describe ".sync_order_promotions" do
+    subject { config.sync_order_promotions }
+
+    it { is_expected.to be false }
+
+    it "can be set to true" do
+      config.sync_order_promotions = true
+      expect(subject).to be true
+      config.sync_order_promotions = false
+    end
+  end
+
+  describe ".recalculate_complete_orders" do
+    subject { config.recalculate_complete_orders }
+
+    it { is_expected.to be true }
+
+    it "can be set to false" do
+      config.recalculate_complete_orders = false
+      expect(subject).to be false
+      config.recalculate_complete_orders = true
+    end
+  end
+
+  describe ".configure" do
+    it "yields self" do
+      expect { |b| config.configure(&b) }.to yield_with_args(config)
+    end
+  end
+end

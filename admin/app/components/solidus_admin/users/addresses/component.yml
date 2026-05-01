@@ -1,0 +1,7 @@
+en:
+  title: "Users / %{email} / Addresses"
+  create_order_for_user: Create order for this user
+  update: Update
+  cancel: Cancel
+  billing_address: Billing Address
+  shipping_address: Shipping Address

@@ -1,0 +1,61 @@
+<%
+  adapter =
+    case ENV['DB']
+    when 'mysql2', 'mysql' then 'mysql2'
+    when 'postgresql', 'postgres' then 'postgresql'
+    when 'sqlite3', 'sqlite', '', nil then 'sqlite3'
+    else raise "Invalid DB specified " + ENV['DB'].inspect
+    end
+
+  db_host =
+    case adapter
+    when 'mysql2' then ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
+    when 'postgres' then ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
+    else ENV['DB_HOST']
+    end
+
+  db_username = ENV['DB_USERNAME']
+  db_password = ENV['DB_PASSWORD'] %>
+
+default: &default
+  adapter: <%= adapter %>
+  <% unless db_username.blank? %>username: <%= db_username %><% end %>
+  <% unless db_password.blank? %>password: <%= db_password %><% end %>
+  <% unless db_host.blank? %>host: <%= db_host %><% end %>
+  <% if adapter == 'mysql2' %>encoding: utf8<% end %>
+  <% if adapter == 'postgresql' %>min_messages: warning<% end %>
+
+<% if adapter == 'mysql2' %>
+development:
+  <<: *default
+  database: <%= options[:lib_name] %>_solidus_development
+test:
+  <<: *default
+  database: <%= options[:lib_name] %>_solidus_test
+production:
+  <<: *default
+  database: <%= options[:lib_name] %>_solidus_production
+
+<% elsif adapter == 'postgresql' %>
+development:
+  <<: *default
+  database: <%= options[:lib_name] %>_solidus_development
+test:
+  <<: *default
+  database: <%= options[:lib_name] %>_solidus_test
+production:
+  <<: *default
+  database: <%= options[:lib_name] %>_solidus_production
+
+<% elsif adapter == 'sqlite3' %>
+development:
+  <<: *default
+  database: db/solidus_development.sqlite3
+test:
+  <<: *default
+  database: db/solidus_test.sqlite3
+production:
+  <<: *default
+  database: db/solidus_production.sqlite3
+
+<% end %>

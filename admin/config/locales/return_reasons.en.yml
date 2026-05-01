@@ -1,0 +1,10 @@
+en:
+  solidus_admin:
+    return_reasons:
+      title: "Return Reasons"
+      destroy:
+        success: "Return reasons were successfully removed."
+      create:
+        success: "Return reason was successfully created."
+      update:
+        success: "Return reason was successfully updated."

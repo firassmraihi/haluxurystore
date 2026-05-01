@@ -1,0 +1,12 @@
+en:
+  title: "Users / %{email} / Store Credit / %{amount}"
+  store_credit: Store Credit
+  add_store_credit: Add Store Credit
+  edit_amount: Edit Amount
+  edit_memo: Edit Memo
+  invalidate: Invalidate
+  store_credit_history: Store Credit History
+  credited: Credited
+  created_by: Created By
+  type: Type
+  memo: Memo

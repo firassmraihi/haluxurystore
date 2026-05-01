@@ -1,0 +1,11 @@
+en:
+  scopes:
+    active: Active
+    draft: Draft
+    future: Future
+    expired: Expired
+    all: All
+  status:
+    active: Active
+    inactive: Inactive
+  codes: Codes

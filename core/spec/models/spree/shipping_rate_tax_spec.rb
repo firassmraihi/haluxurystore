@@ -1,0 +1,93 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+module Spree
+  RSpec.describe ShippingRateTax, type: :model do
+    subject(:shipping_rate_tax) { described_class.new }
+
+    it { is_expected.to respond_to(:amount) }
+    it { is_expected.to respond_to(:tax_rate) }
+    it { is_expected.to respond_to(:shipping_rate) }
+
+    describe "absolute_amount" do
+      subject(:shipping_rate_tax) { described_class.new(amount:).absolute_amount }
+
+      context "with a negative amount" do
+        let(:amount) { -19 }
+
+        it { is_expected.to eq(19) }
+      end
+
+      context "with a positive amount" do
+        let(:amount) { 19 }
+        it { is_expected.to eq(19) }
+      end
+    end
+
+    describe "display_absolute_amount" do
+      subject(:shipping_rate_tax) { described_class.new(amount: 10).display_absolute_amount.to_s }
+
+      it { is_expected.to eq("$10.00") }
+    end
+
+    describe "#currency" do
+      subject(:shipping_rate_tax) { described_class.new(amount: 10, shipping_rate:).currency }
+
+      context "when we have a shipping rate" do
+        let(:shipping_rate) { build_stubbed(:shipping_rate) }
+
+        it "delegates the call to the shipment" do
+          expect(shipping_rate).to receive(:currency)
+          subject
+        end
+      end
+
+      context "when we don't have a shipping rate" do
+        let(:shipping_rate) { nil }
+
+        it "is nil" do
+          expect(subject).to eq(nil)
+        end
+      end
+    end
+
+    describe "#label" do
+      subject(:shipping_rate_tax) { described_class.new(amount:, tax_rate:).label }
+
+      context "with an included tax rate" do
+        let(:tax_rate) { build_stubbed(:tax_rate, included_in_price: true, name: "VAT") }
+
+        context "with a positive amount" do
+          let(:amount) { 2.2 }
+          it "labels an included tax" do
+            expect(subject).to eq("incl. $2.20 VAT")
+          end
+        end
+      end
+
+      context "with an additional tax rate" do
+        let(:tax_rate) { build_stubbed(:tax_rate, included_in_price: false, name: "Sales Tax") }
+        let(:amount) { 2.2 }
+
+        it "labels an additional tax" do
+          expect(subject).to eq("+ $2.20 Sales Tax")
+        end
+      end
+    end
+
+    describe "autosaving when order is saved" do
+      let(:tax_rate) { create(:tax_rate) }
+      let(:shipping_rate) { create(:shipping_rate) }
+      let(:shipment) { shipping_rate.shipment }
+
+      it "works" do
+        shipping_rate.taxes.new(
+          amount: -2,
+          tax_rate: tax_rate
+        )
+        expect { shipment.save! }.to change { Spree::ShippingRateTax.count }
+      end
+    end
+  end
+end

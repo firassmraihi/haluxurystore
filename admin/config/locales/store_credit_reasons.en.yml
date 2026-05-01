@@ -1,0 +1,10 @@
+en:
+  solidus_admin:
+    store_credit_reasons:
+      title: "Store Credit Reasons"
+      destroy:
+        success: "Store credit reasons were successfully removed."
+      create:
+        success: "Store credit reason was successfully created."
+      update:
+        success: "Store credit reason was successfully updated."

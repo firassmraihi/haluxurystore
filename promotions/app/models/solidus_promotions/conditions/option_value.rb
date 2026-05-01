@@ -1,0 +1,23 @@
+# frozen_string_literal: true
+
+module SolidusPromotions
+  module Conditions
+    class OptionValue < Condition
+      include LineItemApplicableOrderLevelCondition
+
+      include OptionValueCondition
+
+      def order_eligible?(order, _options = {})
+        OrderOptionValue.new(preferred_eligible_values: preferred_eligible_values).eligible?(order)
+      end
+
+      def line_item_eligible?(line_item, _options = {})
+        LineItemOptionValue.new(preferred_eligible_values: preferred_eligible_values).eligible?(line_item)
+      end
+
+      def price_eligible?(price, _options = {})
+        PriceOptionValue.new(preferred_eligible_values: preferred_eligible_values).eligible?(price)
+      end
+    end
+  end
+end

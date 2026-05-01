@@ -1,0 +1,7 @@
+# Add your component translations here.
+# Use the translation in the example in your template with `t(".hello")`.
+en:
+  title: "Edit Refund Reason"
+  cancel: "Cancel"
+  hints:
+    active: "When checked, this refund reason will be available for selection when adding refunds to orders."

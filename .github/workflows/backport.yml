@@ -1,0 +1,40 @@
+name: "Automatic backporting"
+on:
+  pull_request_target:
+    types: ["labeled", "closed"]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  backport:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.merged == true
+      && contains(
+           join(github.event.pull_request.labels.*.name, '---'),
+           'backport'
+         )
+      && (
+        (github.event.action == 'labeled' && startsWith(github.event.label.name, 'backport')) ||
+          (github.event.action == 'closed')
+      )
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.SOLIDUS_BOT_APP_ID }}
+          private-key: ${{ secrets.SOLIDUS_BOT_APP_PRIVATE_KEY }}
+      - name: Backport Action
+        uses: sqren/backport-github-action@v9.5.1
+        with:
+          github_token: ${{ steps.generate_token.outputs.token }}
+          auto_backport_label_prefix: backport-
+          add_original_reviewers: true
+      - name: Info log
+        if: ${{ success() }}
+        run: cat ~/.backport/backport.info.log
+      - name: Debug log
+        if: ${{ failure() }}
+        run: cat ~/.backport/backport.debug.log

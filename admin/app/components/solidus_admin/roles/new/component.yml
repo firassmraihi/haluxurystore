@@ -1,0 +1,18 @@
+# Add your component translations here.
+# Use the translation in the example in your template with `t(".hello")`.
+en:
+  title: "New Role"
+  cancel: "Cancel"
+  edit: "Edit"
+  view: "View"
+  name_placeholder: "Enter a clear role name"
+  description_placeholder: "Enter a brief description"
+  choose_permissions: "Choose permissions"
+  orders: "Orders"
+  products: "Products"
+  stock: "Stock"
+  restricted_stock: "Restricted Stock"
+  customers: "Customers"
+  promotions: "Promotions"
+  settings: "Settings"
+  other: "Other permissions"

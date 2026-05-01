@@ -1,0 +1,5 @@
+en:
+  title: "New Refund Reason"
+  cancel: "Cancel"
+  hints:
+    active: "When checked, this refund reason will be available for selection when refunding orders."
