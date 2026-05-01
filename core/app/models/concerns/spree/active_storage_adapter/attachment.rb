@@ -81,6 +81,7 @@ module Spree
       end
 
       def default_transformation(width, height)
+        return {resize_to_limit: [800, 800]} if width.nil? && height.nil?
         {resize_to_limit: [width, height]}
       end
     end
