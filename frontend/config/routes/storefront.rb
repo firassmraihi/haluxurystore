@@ -16,10 +16,6 @@ get '/checkout', to: 'checkouts#edit', as: :checkout
 
 get '/orders/:id/token/:token' => 'orders#show', as: :token_order
 
-resources :orders, only: :show do
-  resources :coupon_codes, only: :create
-end
-
 resource :cart, only: [:show, :update] do
   put 'empty'
 end

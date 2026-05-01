@@ -4,7 +4,6 @@ Rails.application.routes.draw do
     req.cookies['solidus_admin'] != 'false' &&
     req.params['solidus_admin'] != 'false'
   }
-  mount SolidusPaypalCommercePlatform::Engine, at: '/solidus_paypal_commerce_platform'
   scope(path: '/') { draw :storefront }
   # This line mounts Solidus's routes at the root of your application.
   #
