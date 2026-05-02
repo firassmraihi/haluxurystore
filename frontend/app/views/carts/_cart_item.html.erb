@@ -20,7 +20,7 @@
         classes: ['cart-item__info']
       ) %>
       <div class="cart-item__price md:hidden col-span-2">
-        <p class="font-sans-md"><%= line_item.display_amount.to_html unless line_item.quantity.nil? %></p>
+        <p class="font-sans-md"><%= "#{line_item.total} TND" unless line_item.quantity.nil? %></p>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
         </div>
 
         <div class="cart-item__price hidden md:block col-span-2">
-          <p class="font-sans-md"><%= line_item.display_amount.to_html unless line_item.quantity.nil? %></p>
+          <p class="font-sans-md"><%= "#{line_item.total} TND" unless line_item.quantity.nil? %></p>
         </div>
 
         <div class="flex items-center justify-end md:hidden gap-x-2">

@@ -28,7 +28,7 @@ class CartsController < StoreController
       respond_to do |format|
         format.html do
           if params.key?(:checkout)
-            redirect_to checkout_state_path(@order.checkout_steps.first)
+            redirect_to confirmation_path
           else
             redirect_to cart_path
           end
