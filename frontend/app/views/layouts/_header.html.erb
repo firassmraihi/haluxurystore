@@ -13,8 +13,7 @@
     </div>
     <div class="flex items-center gap-x-4 xl:gap-x-8 w-full justify-center lg:justify-start">
       <%= link_to root_path, class: 'absolute lg:relative left-1/2 lg:left-0 lg:-translate-x-0 -translate-x-1/2 flex items-center space-x-3' do %>
-        <%= image_tag "logo_small_no_label.svg" %>
-        <span class="uppercase font-sans font-semibold mb-0 dark:text-sand text-body lg:text-body-sm xl:text-body-sm"><%= Spree::Store.default.name %></span>
+      <%= image_tag "logo_small_no_label.png", width: 180, height: 100, style: "margin-top: 25px"%>
       <% end %>
 
       <% categories = taxonomies.first %>
@@ -49,7 +48,7 @@
             current_taxon: taxon,
             max_level: 1,
             item_classes: 'font-sans-md',
-            current_item_classes: 'text-solidus-red',
+            current_item_classes: 'text-label-yellow',
             )) if categories %>
         <% end %>
          </div>
