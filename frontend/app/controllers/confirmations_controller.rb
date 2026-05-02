@@ -1,5 +1,5 @@
-class ConfirmationsController < ApplicationController
-  def new
+class ConfirmationsController  < StoreController
+  def index
   end
 
   def create

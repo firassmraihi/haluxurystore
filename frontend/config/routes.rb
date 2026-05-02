@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get "confirmations/new"
-  get "confirmations/create"
+  get '/confirmation', to: 'confirmations#index', as: :confirmation
   mount Lookbook::Engine, at: '/lookbook' if Rails.env.development?
   mount SolidusAdmin::Engine, at: '/admin', constraints: ->(req) {
     req.cookies['solidus_admin'] != 'false' &&
