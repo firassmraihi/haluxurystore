@@ -3,16 +3,18 @@
     <div class="hidden lg:flex">
       <%= render "shared/navigation/theme_switcher" %>
     </div>
-    <div class='relative w-6 h-6'>
-      <svg class='w-6 h-6 fill-black dark:fill-white'>
-        <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-shopping-cart-2-line"></use>
-      </svg>
-      <div id="link-to-cart" class="absolute top-0 left-0 w-full h-full" data-top-bar-target="cartLink">
+  <div class='relative w-6 h-6' >
+  <%= link_to cart_path do %>
+    <svg class='w-6 h-6 fill-black dark:fill-white'>
+      <use xlink:href="<%= image_path('remixicon.symbol.svg') %>#ri-shopping-cart-2-line"></use>
+    </svg>
+     <div id="link-to-cart" class="absolute top-0 left-0 w-full h-full" data-top-bar-target="cartLink">
         <noscript>
           <%= link_to t('spree.cart'), cart_path %>
         </noscript>
       </div>
-    </div>
+  <% end %>
+</div>
 
   </div>
 </div>

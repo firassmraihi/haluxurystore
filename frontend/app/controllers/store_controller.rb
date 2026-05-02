@@ -14,9 +14,11 @@ class StoreController < Spree::BaseController
   end
 
   def cart_link
-    fresh_when(etag: current_order, template: 'shared/cart/_link_to_cart')
+    if stale?(etag: current_order, template: 'shared/cart/_link_to_cart')
+      render partial: 'shared/cart/link_to_cart'
+    end
   end
-
+  
   private
 
   def config_locale
