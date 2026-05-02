@@ -14,6 +14,8 @@ patch '/checkout/update/:state', to: 'checkouts#update', as: :update_checkout
 get '/checkout/:state', to: 'checkouts#edit', as: :checkout_state
 get '/checkout', to: 'checkouts#edit', as: :checkout
 
+resource :confirmation, only: [:new, :create]
+
 get '/orders/:id/token/:token' => 'orders#show', as: :token_order
 
 resource :cart, only: [:show, :update] do
