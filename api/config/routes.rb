@@ -66,7 +66,6 @@ Spree::Core::Engine.routes.draw do
         put :cancel
         put :empty
       end
-
     end
 
     resources :zones

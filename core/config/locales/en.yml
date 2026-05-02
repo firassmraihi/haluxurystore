@@ -70,7 +70,7 @@ en:
         password: Mot de passe
         password_confirmation: Confirmation du mot de passe
   spree:
-    add_to_cart: Ajouter au panier
+    add_to_cart: Acheter
     cart: Panier
     checkout: Commander
     continue_shopping: Continuer mes achats
