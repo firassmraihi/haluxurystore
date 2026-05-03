@@ -4,6 +4,10 @@
 # Solidus version defaults for preferences that are not overridden
 Spree.load_defaults '4.8.0.dev'
 
+Rails.application.config.after_initialize do
+  Spree::Config.send_core_emails = false
+end
+
 Spree.config do |config|
   # Core:
   # Default currency for new sites

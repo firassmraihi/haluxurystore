@@ -38,7 +38,9 @@
           order: @order
         ) %>
         <% if flash_messages.present? %>
+         <div class="text-center w-full">
           <%= flash_messages %>
+           </div>
         <% end %>
         <%= yield %>
       </main>

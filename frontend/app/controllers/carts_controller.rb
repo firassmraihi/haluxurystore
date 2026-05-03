@@ -10,6 +10,7 @@ class CartsController < StoreController
   # note: do not lock the #show action because that's where we redirect when we fail to acquire a lock
   around_action :lock_order, only: :update
 
+
   # Shows the current incomplete order from the session
   def show
     @order = current_order(build_order_if_necessary: true)
